@@ -1,0 +1,48 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-update-the-online-multiplayer-frontend-solo-flow-so-it-no-longer-enters-a-waiting-queued-state-for-solo-matches-when-the-user-clicks-play-solo-the-ui-should-reliably-transition-to-an-active-match-state-showing-match-details-and-the-fight-button-without-showing-the-queue-related-error-toast",
+      "featureTitle": "Update the Online Multiplayer frontend Solo flow so it no longer enters a 'waiting/queued' state for Solo matches. When the user clicks \"Play Solo\", the UI should reliably transition to an active match state (showing match details and the \"Fight!\" button) without showing the queue-related error toast.",
+      "files": [
+        "frontend/src/pages/Multiplayer.tsx",
+        "frontend/src/utils/combatErrors.ts"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "stripe@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "http-outcalls@3.0.0"
+      ],
+      "testIds": [
+        "REQ-23"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-deploy-the-updated-build-immediately-after-implementing-the-solo-matchmaking-fix-so-the-live-environment-reflects-the-corrected-solo-behavior",
+      "featureTitle": "Deploy the updated build immediately after implementing the Solo matchmaking fix so the live environment reflects the corrected Solo behavior.",
+      "files": [
+        "frontend/DEPLOYMENT.md"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "stripe@3.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "http-outcalls@3.0.0"
+      ],
+      "testIds": [
+        "REQ-24"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

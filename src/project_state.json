@@ -1,0 +1,248 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 9,
+  "summary": "Game project \"Goon Life\" featuring a free online multiplayer mode and a paid story mode called \"Goon Fighter\", with a shared combat system across both modes that impacts ranks and leaderboards.",
+  "architectural_notes": [
+    "Online Multiplayer UX should avoid manual entry of match/opponent IDs; provide Play-button matchmaking with random pairing and a solo fallback when no opponent is available.",
+    "Solo play must bypass multiplayer queue/matchmaking; backend should provide a separate solo-start path (or a matchmaking flag) so solo never returns \"already in queue\" and does not enqueue the player."
+  ],
+  "known_issues": [
+    "Online Multiplayer: Both Multiplayer Play and Solo button return \"already in queue\" error; solo incorrectly hits matchmaking queue logic and cannot start a solo match."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-create-the-core-app-shell-for-the-game-goon-life-with-navigation-to-two-modes-1-a-free-online-multiplayer-mode-and-2-a-paid-goon-fighter-story-mode",
+      "title": "Create the core app shell for the game \"Goon Life\" with navigation to two modes: (1) a free \"Online Multiplayer\" mode and (2) a paid \"Goon Fighter\" story mode.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-internet-identity-sign-in-and-require-authentication-for-multiplayer-ranks-and-leaderboard-interactions-viewing-can-be-allowed-without-sign-in-but-any-action-that-records-results-must-require-sign-in",
+      "title": "Implement Internet Identity sign-in and require authentication for multiplayer, ranks, and leaderboard interactions (viewing can be allowed without sign-in, but any action that records results must require sign-in).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-paid-access-gating-for-the-goon-fighter-story-mode-users-must-purchase-once-to-unlock-access-online-multiplayer-remains-free",
+      "title": "Implement paid access gating for the \"Goon Fighter\" story mode: users must purchase once to unlock access; \"Online Multiplayer\" remains free.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-purchase-flow-for-goon-fighter-using-a-supported-payment-approach-and-record-the-unlock-on-successful-completion",
+      "title": "Add a purchase flow for \"Goon Fighter\" using a supported payment approach and record the unlock on successful completion.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-the-ranks-system-with-the-exact-rank-ladder-provided-by-the-user-and-assign-display-each-signed-in-player-s-current-rank-based-on-their-rating-points",
+      "title": "Implement the ranks system with the exact rank ladder provided by the user and assign/display each signed-in player's current rank based on their rating/points.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-leaderboards-that-rank-players-globally-based-on-their-rating-points-and-show-each-entry-s-player-identifier-and-rank-name",
+      "title": "Add leaderboards that rank players globally based on their rating/points and show each entry's player identifier and rank name.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-minimal-online-multiplayer-gameplay-loop-compatible-with-platform-constraints-no-real-time-sockets-allow-users-to-create-join-matches-and-submit-results-that-update-rating-rank-and-leaderboard",
+      "title": "Implement a minimal \"Online Multiplayer\" gameplay loop compatible with platform constraints (no real-time sockets): allow users to create/join matches and submit results that update rating/rank and leaderboard.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-a-coherent-distinctive-visual-theme-for-goon-life-colors-typography-layout-and-apply-it-consistently-across-the-landing-mode-selection-paywall-ranks-and-leaderboard-screens-avoid-a-blue-purple-dominant-palette",
+      "title": "Provide a coherent, distinctive visual theme for \"Goon Life\" (colors, typography, layout) and apply it consistently across the landing, mode selection, paywall, ranks, and leaderboard screens (avoid a blue/purple-dominant palette).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-generate-and-include-custom-static-visual-assets-for-the-game-branding-logo-background-and-render-them-in-the-ui-as-static-files",
+      "title": "Generate and include custom static visual assets for the game branding (logo + background) and render them in the UI as static files.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-online-multiplayer-ui-to-use-the-new-combat-flow-initiate-combat-and-resolve-combat-instead-of-manually-entering-winner-loser-principals-and-point-values",
+      "title": "Update the Online Multiplayer UI to use the new combat flow (initiate combat and resolve combat) instead of manually entering winner/loser principals and point values.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-replace-the-unlocked-story-mode-placeholder-content-with-a-playable-combat-loop-that-uses-the-same-backend-combat-engine-and-awards-points-that-affect-ranks-and-the-global-leaderboard",
+      "title": "Replace the unlocked Story Mode placeholder content with a playable combat loop that uses the same backend combat engine and awards points that affect ranks and the global leaderboard.",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-extend-react-query-hooks-in-frontend-src-hooks-usequeries-ts-to-wrap-the-new-backend-combat-endpoints-start-resolve-combat-and-any-required-session-fetch-status-calls",
+      "title": "Add/extend React Query hooks in frontend/src/hooks/useQueries.ts to wrap the new backend combat endpoints (start/resolve combat and any required session fetch/status calls).",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-user-facing-combat-ui-text-is-in-english-and-consistent-with-the-existing-app-tone",
+      "title": "Ensure all user-facing combat UI text is in English and consistent with the existing app tone.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-online-multiplayer-ui-frontend-src-pages-multiplayer-tsx-to-remove-the-requirement-to-type-opponent-principal-ids-and-match-ids-replace-the-current-create-match-resolve-fight-tab-flow-with-a-primary-play-button-that-initiates-random-matchmaking-and-then-proceeds-with-the-combat-flow-using-the-match-created-returned-by-the-backend-including-solo-matches",
+      "title": "Update the Online Multiplayer UI (frontend/src/pages/Multiplayer.tsx) to remove the requirement to type opponent principal IDs and match IDs. Replace the current \"Create Match\" / \"Resolve Fight\" tab flow with a primary \"Play\" button that initiates random matchmaking and then proceeds with the combat flow using the match created/returned by the backend (including solo matches).",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-extend-react-query-hooks-frontend-src-hooks-usequeries-ts-to-wrap-the-new-backend-matchmaking-endpoint-s-used-by-the-play-button-and-ensure-relevant-queries-are-invalidated-refetched-after-a-match-is-created-paired-resolved-at-minimum-mystats-and-leaderboard",
+      "title": "Extend React Query hooks (frontend/src/hooks/useQueries.ts) to wrap the new backend matchmaking endpoint(s) used by the \"Play\" button, and ensure relevant queries are invalidated/refetched after a match is created/paired/resolved (at minimum: myStats and leaderboard).",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-deploy-the-updated-build-immediately-do-not-leave-the-changes-as-a-draft-only-iteration-so-the-live-environment-reflects-the-one-click-matchmaking-play-flow-instead-of-the-current-manual-id-entry-flow",
+      "title": "Deploy the updated build immediately (do not leave the changes as a draft-only iteration) so the live environment reflects the one-click matchmaking \"Play\" flow instead of the current manual ID entry flow.",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-online-multiplayer-frontend-solo-flow-so-it-no-longer-enters-a-waiting-queued-state-for-solo-matches-when-the-user-clicks-play-solo-the-ui-should-reliably-transition-to-an-active-match-state-showing-match-details-and-the-fight-button-without-showing-the-queue-related-error-toast",
+      "title": "Update the Online Multiplayer frontend Solo flow so it no longer enters a 'waiting/queued' state for Solo matches. When the user clicks \"Play Solo\", the UI should reliably transition to an active match state (showing match details and the \"Fight!\" button) without showing the queue-related error toast.",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-deploy-the-updated-build-immediately-after-implementing-the-solo-matchmaking-fix-so-the-live-environment-reflects-the-corrected-solo-behavior",
+      "title": "Deploy the updated build immediately after implementing the Solo matchmaking fix so the live environment reflects the corrected Solo behavior.",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create two game modes: free online multiplayer (Goon Life) and paid story mode (Goon Fighter)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement monetization: story mode (Goon Fighter) must be purchased for money",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Add ranks and leaderboards system",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Define rank ladder: goon newbie, goon recruit, goon amateur, goon elite, goon master, goon grandmaster, goon lord, goonest of the weakest, goon supreme, goonest of the greatest, goon apex, greatest of the goonest",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Build a shared combat system for both Online Multiplayer and Goon Fighter story mode, with combat outcomes affecting ranks and leaderboards",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Implement a shared, deterministic combat engine in the Motoko backend that can be used by both Online Multiplayer and Goon Fighter story mode to produce a winner/loser outcome and point rewards.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Persist combat-related state needed to prevent abuse and ensure valid submissions (e.g., active combat sessions/matches) and enforce that only authorized participants can resolve/submit a combat outcome that affects points.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Integrate combat outcomes with the existing points/rank/leaderboard system so that combat results update player stats consistently and leaderboard refresh reflects new point totals.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Update Online Multiplayer to use a single Play button that auto-creates/joins a match via random matchmaking (no match ID/opponent ID entry) and allows starting a solo match if no opponent is available",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Implement backend random matchmaking with a single \"Play\" action that does not require users to enter a match ID or opponent principal. The backend must support: (a) enqueueing a signed-in player for random pairing, (b) immediately pairing with another waiting player when available and creating an active match for both players, and (c) allowing a signed-in player to start a solo match when no opponent is available (or when explicitly requested), using the existing active match tracking to prevent duplicate/invalid resolutions.",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Update backend matchmaking so that starting a Solo match does not enqueue the player and does not trigger the multiplayer queue 'already in queue' error. Calling `findMatch(true)` must immediately create and return a `MatchState` where `player1 == player2 == caller`, store it in `activeMatches`, and allow the user to press Fight right away.",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Update backend matchmaking behavior so that if an authenticated user calls `findMatch(false)` while they are already queued, the backend does not trap with an error; it should return `null` (still waiting) in a way that the UI can treat as 'waiting for opponent' instead of showing an error toast.",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Goon Life",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

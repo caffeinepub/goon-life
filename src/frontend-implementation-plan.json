@@ -1,0 +1,43 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Fix Solo matchmaking frontend flow to avoid queued/waiting state",
+  "requirements": [
+    {
+      "id": "REQ-23",
+      "summary": "Adjust Online Multiplayer Solo flow so \"Play Solo\" immediately enters an active match state and never shows queued/waiting UI or queue-related error messaging during successful Solo creation.",
+      "acceptanceCriteria": [
+        "Clicking \"Play Solo\" results in `currentMatch` being set immediately (non-null) and the \"Fight!\" button being shown without showing the waiting alert.",
+        "Queue-related error messaging (e.g., 'already waiting for a match') is not shown during successful Solo match creation.",
+        "All user-facing text remains in English."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/Multiplayer.tsx",
+          "operation": "modify",
+          "description": "Update the \"Play Solo\" handler to never transition into `isWaitingForOpponent` (queued/waiting) state; treat a null match result as an unexpected failure (show a generic English error and keep the user out of waiting state), and ensure the UI reliably displays the active match details + \"Fight!\" button for Solo. Also ensure the waiting alert copy remains applicable only to multiplayer queue behavior."
+        },
+        {
+          "path": "frontend/src/utils/combatErrors.ts",
+          "operation": "modify",
+          "description": "Adjust queue-related error normalization to avoid encouraging a queued/waiting interpretation for Solo flows (keep messaging accurate and English). Ensure the normalized string for \"already in the queue\" remains oriented to multiplayer waiting rather than implying Solo queuing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "summary": "Update frontend deployment checklist to verify the corrected Solo flow in production immediately after deploying.",
+      "acceptanceCriteria": [
+        "The production deployment includes the updated backend `findMatch` behavior and the updated Multiplayer UI Solo flow.",
+        "Post-deploy verification: an authenticated user can click \"Play Solo\" and then \"Fight!\" successfully without encountering the 'already in queue' error."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/DEPLOYMENT.md",
+          "operation": "modify",
+          "description": "Extend the checklist with explicit post-deploy verification steps for Solo: \"Play Solo\" should create a match immediately (no waiting/queued UI), show \"Fight!\" right away, and must not display queue-related error toasts such as \"already in queue\"."
+        }
+      ]
+    }
+  ]
+}

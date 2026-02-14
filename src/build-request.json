@@ -1,0 +1,94 @@
+{
+  "kind": "build_request",
+  "title": "Fix Solo matchmaking incorrectly using queue and throwing 'already in queue'",
+  "priority": "high",
+  "requirements": [
+    {
+      "id": "REQ-21",
+      "text": "Update backend matchmaking so that starting a Solo match does not enqueue the player and does not trigger the multiplayer queue 'already in queue' error. Calling `findMatch(true)` must immediately create and return a `MatchState` where `player1 == player2 == caller`, store it in `activeMatches`, and allow the user to press Fight right away.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "it gives error and sas ur alr in queue but there should be no queue for solo tho",
+          "its seperate button butboth give same queue error"
+        ]
+      },
+      "acceptanceCriteria": [
+        "When an authenticated user calls `findMatch(true)`, the backend returns `?MatchState` (non-null) immediately and does not add the caller to the multiplayer matchmaking queue.",
+        "After `findMatch(true)`, the caller can successfully resolve combat for the returned match without needing a second click or waiting state.",
+        "A user who previously queued via `findMatch(false)` and then clicks Solo should not receive an 'already in the queue' error; Solo should still create a solo match successfully."
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "text": "Update backend matchmaking behavior so that if an authenticated user calls `findMatch(false)` while they are already queued, the backend does not trap with an error; it should return `null` (still waiting) in a way that the UI can treat as 'waiting for opponent' instead of showing an error toast.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "it gives error and sas ur alr in queue"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Calling `findMatch(false)` twice in a row from the same authenticated principal does not throw/trap; the second call returns `null`.",
+        "The backend no longer produces the trap message 'You are already in the queue...' for the normal multiplayer Play flow."
+      ]
+    },
+    {
+      "id": "REQ-23",
+      "text": "Update the Online Multiplayer frontend Solo flow so it no longer enters a 'waiting/queued' state for Solo matches. When the user clicks \"Play Solo\", the UI should reliably transition to an active match state (showing match details and the \"Fight!\" button) without showing the queue-related error toast.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "plus not letting me play solo",
+          "its seperate button butboth give same queue error"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Clicking \"Play Solo\" results in `currentMatch` being set immediately (non-null) and the \"Fight!\" button being shown without showing the waiting alert.",
+        "Queue-related error messaging (e.g., 'already waiting for a match') is not shown during successful Solo match creation.",
+        "All user-facing text remains in English."
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "text": "Deploy the updated build immediately after implementing the Solo matchmaking fix so the live environment reflects the corrected Solo behavior.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "recent-messages"
+        ],
+        "quotes": [
+          "do quick and deploy immeditae",
+          "build"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The production deployment includes the updated backend `findMatch` behavior and the updated Multiplayer UI Solo flow.",
+        "Post-deploy verification: an authenticated user can click \"Play Solo\" and then \"Fight!\" successfully without encountering the 'already in queue' error."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor in backend/main.mo (no additional backend services).",
+    "Do not edit files under frontend immutablePaths (compose existing UI components instead).",
+    "Use English for any user-facing text."
+  ],
+  "nonGoals": [
+    "Add real-time matchmaking (no WebSockets or real-time chat).",
+    "Add new payment, rank ladder, or leaderboard features unrelated to the Solo queue bug.",
+    "Introduce new authentication providers beyond Internet Identity."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

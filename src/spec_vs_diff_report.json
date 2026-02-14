@@ -1,0 +1,57 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-14T04:47:27.445Z",
+  "summary": "Frontend Solo flow was updated to avoid entering a waiting state and to treat a null solo match as an error. However, the diff summary does not provide evidence that the backend `findMatch` logic was updated to (a) create an immediate solo match without queue interaction and (b) return `null` (instead of trapping) when a user is already queued for multiplayer. Deployment to production also cannot be verified from the diff summary. Additionally, backend rank ladder content appears to have been modified with at least one non-English rank name, which was not requested and conflicts with the English text constraint.",
+  "missing_requirements": [
+    {
+      "id": "REQ-21",
+      "requirement": "Update backend matchmaking so `findMatch(true)` immediately creates and returns a solo `MatchState` (player1 == player2 == caller), stores it in `activeMatches`, does not enqueue the caller, and does not trigger the multiplayer 'already in queue' error (including when previously queued via `findMatch(false)`).",
+      "reason": "The backend file is truncated and the diff summary does not show any changes to the `findMatch` implementation, queue handling, or `activeMatches` updates needed to meet the solo matchmaking acceptance criteria.",
+      "evidence": [
+        "backend/main.mo (truncated; no visible `findMatch`/queue/activeMatches changes in shown excerpt)"
+      ]
+    },
+    {
+      "id": "REQ-22",
+      "requirement": "Update backend matchmaking so calling `findMatch(false)` while already queued does not trap; it returns `null` instead, eliminating the trap message 'You are already in the queue...' for normal multiplayer play.",
+      "reason": "The diff summary does not show backend logic that replaces the existing trap/error with a `null` return on repeated `findMatch(false)` calls from the same principal.",
+      "evidence": [
+        "backend/main.mo (truncated; no visible `findMatch(false)` already-queued handling changes)"
+      ]
+    },
+    {
+      "id": "REQ-24",
+      "requirement": "Deploy the updated build so production reflects the corrected backend `findMatch` behavior and the updated Multiplayer UI Solo flow, and verify Solo Play -> Fight works without the 'already in queue' error.",
+      "reason": "The diff includes a deployment checklist document but provides no evidence of an actual production deployment or release configuration changes that would satisfy the deployment requirement/acceptance criteria.",
+      "evidence": [
+        "frontend/DEPLOYMENT.md (checklist only; no deployment execution evidence)"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Backend rank ladder content appears to be changed/defined with additional ranks including at least one non-English rank name (e.g., \"Auswärtige\"), which was not requested and conflicts with the constraint that user-facing text remain English.",
+      "reason": "The BuildRequest focuses on fixing Solo matchmaking/queue behavior; it explicitly lists non-goals including unrelated rank/leaderboard features and requires English user-facing text. The diff excerpt shows rank definitions and includes a German term.",
+      "evidence": [
+        "backend/main.mo (excerpt shows ranks.add(... name = \"Auswärtige\" ...))"
+      ]
+    },
+    {
+      "description": "Added/expanded a frontend deployment checklist document.",
+      "reason": "REQ-24 asks to deploy; it does not request adding documentation. This is additional scope beyond the specified requirements (though related).",
+      "evidence": [
+        "frontend/DEPLOYMENT.md"
+      ]
+    }
+  ],
+  "confidence": 0.58,
+  "changed_files": [
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/DEPLOYMENT.md",
+    "frontend/src/pages/Multiplayer.tsx",
+    "frontend/src/utils/combatErrors.ts",
+    "project_state.json"
+  ]
+}
